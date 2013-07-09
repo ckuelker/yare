@@ -1,0 +1,8 @@
+#!/usr/bin/perl -w
+use warnings;
+use strict;
+use Yare::Client;
+
+my $c = Yare::Client->new;
+$c->cmdloop;
+exit 0;
