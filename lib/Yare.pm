@@ -7,9 +7,11 @@ __END__
 
 =pod
 
-NAME yare - do it! Distributed todo prove of concept
+=head1 NAME 
 
-MOTIVATION
+yare - do it! Distributed todo prove of concept
+
+=head1 MOTIVATION
 
 Often I experienced that data gets lost, when using calendar or todo lists
 shared over a central daemon. That is quite disappointing. Other software
@@ -20,18 +22,18 @@ always online. Even Git - which handles merges quite good - is not a solution
 to this problem. It is very likely that the unexperienced or busy user ends up
 in front of a complex merge conflict question. 
 
-TARGET
+=head1 TARGET
 
 Synchronize todo list information among 3 clients, which can be online or offline
 without merge conflicts or loss of (non unique!) data.
 
-THESIS
+=head1 THESIS
 
 a) The loss of non unique (doubled) data can be tolerated by the user.
 b) Conflicts rose by duplicated data can be solved easily by the user.
    (by deleting unwanted entries)
 
-SOLUTION
+=head1 SOLUTION
 
 (1) A git repository as central storage and share facility. 
 
@@ -47,7 +49,7 @@ SOLUTION
 (6) Every todo entry is stored in a separate file and the name of the file is
     the md5 sum of its content.
 
-DISCUSSION
+=head1 DISCUSSION
 
 As it is obvious from point (2), (3) and (6) a git merge conflict is seldom.
 However not impossible. It is possible if computer A create the same todo text
@@ -73,23 +75,4 @@ Tolmezzo, 2013
 Christian Külker <christian.kuelker@cipworx.org> 
 
 =cut
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
