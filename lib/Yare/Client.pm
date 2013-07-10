@@ -30,7 +30,7 @@ sub run_fetch {
             $line =~ s{^\[\s{1,1}\]\s+}{}mx;
             $line =~ s{^\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\d\s+}{}mx;
             $line =~ s{^\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\d\s+}{}mx;
-            printf( "%s: %s\n", $fn_idx_hr->{$fn}, $line );
+            printf( "%4s: %s\n", $fn_idx_hr->{$fn}, $line );
         }
     }
     print "-" x 78 . "\n";
