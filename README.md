@@ -44,36 +44,13 @@ Create a configuration file:
 
 ## USAGE
 
-Execute the script
+After installation, see:
 
-   yare
+    man Yare 
 
-If you enter 'help'<RETRUN> you get a brief list of available commands.  Use
-'add' to create an entry. Add is used like:
-
-    add Something I need to do
-
-Use 'fetch' to display the list:
-
-    fetch
-    ----------------------------------------------------------------------------
-    0: Something I need to do
-    ----------------------------------------------------------------------------
-
-To remove this entry, you can mark it as 'done' like:
-
-    done 0
-
-## FURTHER INFORMATION
-
-You can get further information (for example: why this software has been
-written and what concept to be proved) via the ordinary Perl documentation.
+or 
 
     perldoc Yare
-
-or
-
-    man Yare
 
 
 Tolmezzo, 2013
