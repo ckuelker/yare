@@ -68,11 +68,46 @@ Regarding point b). The user can easily remove doubled entries.
 I would like to hear more opinions about this concept and of course I am
 interested in, if there is a flaw in this concept.
 
+=head1 USAGE
 
+Execute the script
 
-Tolmezzo, 2013
+   yare
 
-Christian Külker <christian.kuelker@cipworx.org> 
+If you enter 'help'<RETRUN> you get a brief list of available commands.  Use
+'add' to create an entry. Add is used like:
+
+    add Something I need to do
+
+Use 'fetch' to display the list:
+
+    fetch
+    ---------------------------------------------------------------------------- 
+    0: Something I need to do
+    ---------------------------------------------------------------------------- 
+
+To remove this entry, you can mark it as 'done' like:
+
+    done 0
+
+## FURTHER INFORMATION
+
+You can get further information (for example: why this software has been
+written and what concept to be proved) via the ordinary Perl documentation.
+
+    perldoc Yare
+
+or
+
+    man Yare
+
+=head1 SEE ALSO
+
+L<Yare::Client> - the current implementation
+
+=head1 AUTHOR
+
+    Christian Külker <christian.kuelker@cipworx.org> 
 
 =cut
 
