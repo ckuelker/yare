@@ -7,7 +7,7 @@ yare - do it! Distributed todo prove of concept
 
 Use the usual Perl ways to install. For example:
 
-    tar xvzf Yare-0.0.1.tar.gz
+    tar xvzf Yare-0.0.2.tar.gz
     cd Yare
     perl Makefile.PL
     make
