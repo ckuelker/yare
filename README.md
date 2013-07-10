@@ -44,16 +44,28 @@ Create a configuration file:
 
 ## USAGE
 
-After installation, see:
+Execute the script
 
-    man Yare 
+    yare
 
-or 
+If you enter 'help' you get a brief list of available commands. Use 'add' to
+create an entry. Add is used like:
 
-    perldoc Yare
+    add Something I need to do
 
+Use 'fetch' to display the list:
 
-Tolmezzo, 2013
+    fetch
+    ----------------------------------------------------------------------------
+    0: Something I need to do
+    ----------------------------------------------------------------------------
+
+To remove this entry, you can mark it as 'done' like:
+
+    done 0
+
+## AUTHOR
 
 Christian Külker <christian.kuelker@cipworx.org> 
 
+Tolmezzo, 2013
