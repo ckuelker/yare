@@ -193,3 +193,47 @@ sub new {
 1;
 __END__
 
+=pod
+
+=head1 NAME
+
+Yare::Client
+
+=head1 VERSION
+
+version 0.0.2
+
+=head1 SYNOPSIS
+
+    use Yare::Client;
+    my $c = Yare::Client->new;
+    $c->cmdloop;
+
+=head1 DESCRIPTION
+
+Yare is a prove of concept. It proves how a shared todo list can be made
+possible. Yare::Client implements the access to a Yare based todo list. For
+this to work, it do not matter if the clients (laptops for example) are always
+online or not, or if they try to input the same information at the same time or
+not. Of course it can not work with a client that never ever will be put
+online, but that is obvious. 
+
+Yare::Client is a Term::Shell based class that can be used very simple by
+a program by invoking the shell loop start command.
+
+=head1 METHODS
+
+=head2 cmdloop
+
+This is the only officially method supported (for now). See the SYNOPSIS
+on how to use it.
+
+=head1 SEE ALSO
+
+    - L<Yare> - general explanation of motivation, function  and usage
+
+=head1 AUTHOR
+
+Christian Külker <christian.kuelker@ciwporx.org>
+
+=cut
