@@ -116,10 +116,7 @@ sub read_entry_from_fs {
 sub write_entry_to_fs {
     my ( $s, $c_ar ) = @_;
     my $data = join qq{\n}, @{$c_ar};
-    my $ctx = Digest::MD5->new;
-    $ctx->add($data);
-    my $digest = $ctx->hexdigest;
-    my $fn     = "$wt/$digest.yare";
+    my $fn = "$wt/" . Digest::MD5->new->add($data)->hexdigest . '.yare';
     open my $f, q{>}, $fn or die "can not write [$fn]\n";
     foreach my $line ( @{$c_ar} ) { print $f "$line\n"; }
     close $f;
