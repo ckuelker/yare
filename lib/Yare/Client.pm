@@ -42,7 +42,7 @@ sub run_done {
         print "USAGE: \n" . $s->help_done;
         return;
     }
-    print "mark entry [$i] as done ...\n";
+    print "mark entry [$i] as 'yatta!' (done) ...\n";
     my ( $todo_hr, $o, $fn_idx_hr, $cnt_idx_hr ) = $s->fetch_todo_data;
     if ( not exists $cnt_idx_hr->{$i} or not defined $cnt_idx_hr->{$i} ) {
         print "ERROR: no entry $i! Maximum is $o. Use 'fetch' to see\n";
@@ -52,7 +52,7 @@ sub run_done {
     my $fn    = "$wt/" . $cnt_idx_hr->{$i} . ".yare";
     my $entry = $s->read_entry_from_fs($fn);
     $s->git_remove($fn);
-    $s->git_commit( $fn, 'done' );
+    $s->git_commit( $fn, 'yatta! (done)' );
     $entry =~ s{^\[\s{1,1}\]}{[O]}mx;
     $entry =~ s{$dd}{$date}gmxe;
     my $nfn = $s->write_entry_to_fs( [$entry] );
@@ -60,6 +60,7 @@ sub run_done {
     $s->git_commit( $nfn, 'history' );
     $s->git_pull;
     $s->git_push;
+    print "yatta! (done)\n\n";
 }
 
 sub run_add {
@@ -82,7 +83,7 @@ sub run_add {
 # -------------------- shell summary ----------------------------------------
 sub smry_fetch { return "displays all pending todo entries"; }
 sub smry_add   { return "adds a todo entry"; }
-sub smry_done  { return "marks one todo entry as 'done'"; }
+sub smry_done  { return "marks one todo entry as 'yatta!' (done)"; }
 
 # -------------------- shell help -------------------------------------------
 sub help_fetch {
@@ -198,7 +199,7 @@ Yare::Client
 
 =head1 VERSION
 
-version 0.0.2
+version 0.0.3
 
 =head1 SYNOPSIS
 
