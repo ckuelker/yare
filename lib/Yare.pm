@@ -39,7 +39,7 @@ b) Conflicts rose by duplicated data can be solved easily by the user.
 
 (2) Every todo entry has a time stamp when it was created
 
-(3) Every todo entry has a time stamp when it was marked as 'done'
+(3) Every todo entry has a time stamp when it was marked as 'yatta!' (done)
 
 (4) Every add, remove and commit can be done also offline
 
@@ -86,9 +86,14 @@ Use 'fetch' to display the list:
     0: Something I need to do
     ---------------------------------------------------------------------------- 
 
-To remove this entry, you can mark it as 'done' like:
+To remove this entry, you can mark it as 'yatta!' (done) like:
 
     done 0
+
+Yare will then print
+
+    yatta! (done)
+
 
 ## FURTHER INFORMATION
 

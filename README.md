@@ -7,11 +7,11 @@ yare - do it! Distributed todo prove of concept
 
 Use the usual Perl ways to install. For example:
 
-    tar xvzf Yare-0.0.2.tar.gz
+    tar xvzf Yare-0.0.3.tar.gz
     cd Yare
     perl Makefile.PL
     make
-    
+
 As root
 
     make install
@@ -41,7 +41,6 @@ Create a configuration file:
     echo "[git]"                         >> ~/.yare/yare.ini
     echo "worktree=~/.yare/todo          >> ~/.yare/yare.ini
 
-
 ## USAGE
 
 Execute the script
@@ -60,9 +59,13 @@ Use 'fetch' to display the list:
     0: Something I need to do
     ----------------------------------------------------------------------------
 
-To remove this entry, you can mark it as 'done' like:
+To remove this entry, you can mark it as 'yatta!' (done) like:
 
     done 0
+
+After processing you will see the success
+
+    yatta! (done)
 
 ## AUTHOR
 
