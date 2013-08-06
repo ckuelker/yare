@@ -6,12 +6,17 @@ use Moose;
 use Git::Repository;
 use namespace::autoclean;
 use Net::Ping;
-extends 'Term::Shell';
 use Time::Piece ();
+extends 'Term::Shell';
+
 my $dir = glob "~/.yare";
 my $dd  = '0000-00-00T00:00:00';
+
+# configuration
 my $cfg = Config::INI::Reader->read_file("$dir/yare.ini");
-my $wt  = glob $cfg->{git}->{worktree};
+
+# working tree
+my $wt = glob $cfg->{git}->{worktree};
 
 # -------------------- shell ------------------------------------------------
 sub prompt_str {
@@ -22,16 +27,15 @@ sub prompt_str {
 sub run_fetch {
     my ($s) = @_;
     $s->git_pull;
-    my ( $todo_hr, $o, $fn_idx_hr, $cnt_idx_hr ) = $s->fetch_todo_data;
+    my ( $todo_hr, $o, $fn_idx_hr, $cnt_idx_hr, $print_hr )
+        = $s->fetch_todo_data;
     print "-" x 78 . "\n";
-    foreach my $fn ( sort keys %{$todo_hr} ) {
-        foreach my $line ( @{ $todo_hr->{$fn} } ) {
-            chomp $line;
-            $line =~ s{^\[\s{1,1}\]\s+}{}mx;
-            $line =~ s{^\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\d\s+}{}mx;
-            $line =~ s{^\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\d\s+}{}mx;
-            printf( "%4s: %s\n", $fn_idx_hr->{$fn}, $line );
-        }
+    foreach my $fn (
+        sort { lc $print_hr->{$a} cmp lc $print_hr->{$b} }
+        keys %{$print_hr}
+        )
+    {
+        printf( "%4s: %s\n", $fn_idx_hr->{$fn}, $print_hr->{$fn} );
     }
     print "-" x 78 . "\n";
 }
@@ -126,8 +130,15 @@ sub write_entry_to_fs {
 
 sub fetch_todo_data {
     my ($s) = @_;
-    my ( %todo, %cnt_idx, %fn_idx ) = ();
-    my $o = 0;
+
+    # fetches file names and its content from wroking tree and store it in
+    # 4 hashes.
+    #
+    # todo    = {  file_name => complete_content  }
+    # fn_idx  = {  file_name => ID                }
+    # cnt_idx = {  ID        => file_name         }
+    # print   = {  file_name => print_comtent     }
+    my ( %todo, %print, %cnt_idx, %fn_idx ) = ();
     my @t = ();
     find( sub { push @t, "$File::Find::name$/" if (/\.yare$/) }, $wt );
     foreach my $fn (@t) {
@@ -135,12 +146,22 @@ sub fetch_todo_data {
         my $entry = $s->read_entry_from_fs($fn);
         $fn =~ s{^$wt/(.*)\.yare}{$1}gmx;
         next if not $entry =~ m{^\[\s{1,1}\]}mx;
-        push @{ $todo{$fn} }, $entry;
+        chomp $entry;
+        $todo{$fn} = $entry;
+        $entry =~ s{^\[\s{1,1}\]\s+}{}mx;
+        $entry =~ s{^\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\d\s+}{}mx;
+        $entry =~ s{^\d\d\d\d-\d\d-\d\dT\d\d:\d\d:\d\d\s+}{}mx;
+        $print{$fn} = $entry;
+    }
+    my $o = 0;
+    foreach my $fn ( sort { lc $print{$a} cmp lc $print{$b} } keys %print ) {
         $fn_idx{$fn} = $o;
         $cnt_idx{$o} = $fn;
         $o++;
     }
-    return \%todo, $o - 1, \%fn_idx, \%cnt_idx;
+
+    # todo, nr_of_files, file_name_index_hr, count_index_hr, print
+    return \%todo, $o - 1, \%fn_idx, \%cnt_idx, \%print;
 }
 
 # -------------------- networking -------------------------------------------
