@@ -1,6 +1,8 @@
 package Yare;
 
-# ABSTRACT: yare - do it! Distributed todo prove of concept 
+# ABSTRACT: yare - do it! Distributed todo prove of concept
+
+our $VERSION = '0.0.4';
 
 1;
 __END__
@@ -97,14 +99,13 @@ Yare will then print
 
 ## FURTHER INFORMATION
 
-You can get further information (for example: why this software has been
-written and what concept to be proved) via the ordinary Perl documentation.
+You can get further information via the ordinary Perl documentation.
 
-    perldoc Yare
+    perldoc Yare::Client
 
 or
 
-    man Yare
+    man Yare::Client
 
 =head1 SEE ALSO
 
