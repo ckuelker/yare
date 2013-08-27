@@ -7,6 +7,8 @@ use Git::Repository;
 use namespace::autoclean;
 use Net::Ping;
 use Time::Piece ();
+our $VERSION = '0.0.4';
+
 extends 'Term::Shell';
 
 my $dir = glob "~/.yare";
