@@ -26,8 +26,8 @@ in front of a complex merge conflict question.
 
 =head1 TARGET
 
-Synchronize todo list information among 3 clients, which can be online or offline
-without merge conflicts or loss of (non unique!) data.
+Synchronize todo list information among 3 clients, which can be online or
+offline without merge conflicts or loss of (non unique!) data.
 
 =head1 THESIS
 
@@ -96,6 +96,22 @@ Yare will then print
 
     yatta! (done)
 
+## ADVANCED USAGE
+
+It is possible to use more then one yare todo list. The example show how to
+create a second todo list for work and how to use it
+
+    mkdir -p ~/.yare/work
+    echo "[online]" > ~/.yare/work/yare.ini
+    echo "hostname=server.tld" >> ~/.yare/work/yare.ini
+    echo "[git]" >> ~/.yare/work/yare.ini
+    echo "worktree=~/.yare/work/todo-work" ~/.yare/work/yare.ini
+
+You have to create a remote git repository 'todo-work' and clone it to
+~/.yare/work/todo-work. Then you can use it like:
+
+    export YARE_CFG=~/.yare/work
+    yare
 
 ## FURTHER INFORMATION
 
