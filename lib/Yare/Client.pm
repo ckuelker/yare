@@ -11,8 +11,11 @@ our $VERSION = '0.0.5';
 
 extends 'Term::Shell';
 
-my $dir = glob "~/.yare";
-my $dd  = '0000-00-00T00:00:00';
+my $dir
+    = ( defined $ENV{YARE_CFG} and -d glob $ENV{YARE_CFG} )
+    ? glob $ENV{YARE_CFG}
+    : glob "~/.yare";
+my $dd = '0000-00-00T00:00:00';
 
 # configuration
 my $cfg = Config::INI::Reader->read_file("$dir/yare.ini");
