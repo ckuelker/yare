@@ -7,7 +7,7 @@ use Git::Repository;
 use namespace::autoclean;
 use Net::Ping;
 use Time::Piece ();
-our $VERSION = '0.0.4';
+our $VERSION = '0.0.5';
 
 extends 'Term::Shell';
 

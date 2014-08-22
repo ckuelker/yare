@@ -2,7 +2,7 @@ package Yare;
 
 # ABSTRACT: yare - do it! Distributed todo prove of concept
 
-our $VERSION = '0.0.4';
+our $VERSION = '0.0.5';
 
 1;
 __END__
