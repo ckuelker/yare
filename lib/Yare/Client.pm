@@ -1,3 +1,34 @@
+# +---------------------------------------------------------------------------+
+# | Yare::Client                                                              |
+# |                                                                           |
+# | A Yare shell client.                                                      |
+# |                                                                           |
+# | Version: 0.0.6 (change inline)                                            |
+# |                                                                           |
+# | Changes:                                                                  |
+# |                                                                           |
+# | 0.0.6 2023-03-09 Christian Külker <christian.kuelker@cipworx.org>         |
+# |     - Improve writing                                                     |
+# |     - Improve verbose printing feedback                                   |
+# |     - Improve comments                                                    |
+# |     - Add front boiler plate                                              |
+# |     - Fix online detection (pingecho -> ping syn)                         |
+# | 0.0.5 2014-08-22 Christian Külker <christian.kuelker@cipworx.org>         |
+# |     - YARE_CFG feature (secondary todo lists)                             |
+# | 0.0.4 2013-08-06 Christian Külker <christian.kuelker@cipworx.org>         |
+# |     - Add version (2013-08-27)                                            |
+# |     - Comments and sort output alphabetically                             |
+# | 0.0.3 2013-07-23 Christian Külker <christian.kuelker@cipworx.org>         |
+# |     - Add idea "yatta!"                                                   |
+# |     - Refactor Digest::MD5 call                                           |
+# | 0.0.2 2013-06-10 Christian Külker <christian.kuelker@cipworx.org>         |
+# |     - Improve index number output in fetch list                           |
+# |     - Add POD                                                             |
+# | 0.0.1 2013-06-09 Christian Külker <christian.kuelker@cipworx.org>         |
+# |     - Initial release                                                     |
+# |                                                                           |
+# +---------------------------------------------------------------------------+
+
 package Yare::Client;
 use Config::INI::Reader;
 use Digest::MD5;
@@ -7,7 +38,7 @@ use Moose;
 use namespace::autoclean;
 use Net::Ping;
 use Time::Piece ();
-our $VERSION = '0.0.5';
+our $VERSION = '0.0.6';
 
 extends 'Term::Shell';
 
@@ -17,10 +48,10 @@ my $dir
     : glob "~/.yare";
 my $dd = '0000-00-00T00:00:00';
 
-# configuration
+# Configuration
 my $cfg = Config::INI::Reader->read_file("$dir/yare.ini");
 
-# working tree
+# Working tree
 my $wt = glob $cfg->{git}->{worktree};
 
 # -------------------- shell ------------------------------------------------
@@ -51,7 +82,7 @@ sub run_done {
         print "USAGE: \n" . $s->help_done;
         return;
     }
-    print "mark entry [$i] as 'yatta!' (done) ...\n";
+    print "Mark entry [$i] as 'yatta!' (done) ...\n";
     my ( $todo_hr, $o, $fn_idx_hr, $cnt_idx_hr ) = $s->fetch_todo_data;
     if ( not exists $cnt_idx_hr->{$i} or not defined $cnt_idx_hr->{$i} ) {
         print "ERROR: no entry $i! Maximum is $o. Use 'fetch' to see\n";
@@ -80,7 +111,7 @@ sub run_add {
     }
     my $date = Time::Piece::localtime->strftime('%FT%T');
     my $msg = join q{ }, '[', ']', $date, $dd, @msg;
-    print "add message: $msg\n";
+    print "Add message: $msg\n";
     my $fn = $s->write_entry_to_fs( [$msg] );
     $s->git_add($fn);
     $s->git_commit( $fn, 'init' );
@@ -90,9 +121,9 @@ sub run_add {
 }
 
 # -------------------- shell summary ----------------------------------------
-sub smry_fetch { return "displays all pending todo entries"; }
-sub smry_add   { return "adds a todo entry"; }
-sub smry_done  { return "marks one todo entry as 'yatta!' (done)"; }
+sub smry_fetch { return "Displays all pending todo entries"; }
+sub smry_add   { return "Adds a todo entry"; }
+sub smry_done  { return "Marks one todo entry as 'yatta!' (done)"; }
 
 # -------------------- shell help -------------------------------------------
 sub help_fetch {
@@ -113,11 +144,11 @@ sub help_done {
 DONE
 }
 
-# -------------------- shell utils ------------------------------------------
+# -------------------- shell utilities --------------------------------------
 sub read_entry_from_fs {
     my ( $s, $fn ) = @_;
     my $entry = q{};
-    open my $c, q{<}, $fn or die "can not read [$fn]!\n";
+    open my $c, q{<}, $fn or die "ERROR: Can not read [$fn]!\n";
     while ( my $line = <$c> ) { chomp $line; $entry .= "$line\n"; }
     close $c;
     return $entry;
@@ -127,7 +158,7 @@ sub write_entry_to_fs {
     my ( $s, $c_ar ) = @_;
     my $data = join qq{\n}, @{$c_ar};
     my $fn = "$wt/" . Digest::MD5->new->add($data)->hexdigest . '.yare';
-    open my $f, q{>}, $fn or die "can not write [$fn]\n";
+    open my $f, q{>}, $fn or die "ERROR: Can not write [$fn]\n";
     foreach my $line ( @{$c_ar} ) { print $f "$line\n"; }
     close $f;
     return $fn;
@@ -136,13 +167,13 @@ sub write_entry_to_fs {
 sub fetch_todo_data {
     my ($s) = @_;
 
-    # fetches file names and its content from wroking tree and store it in
-    # 4 hashes.
+    # Fetches file names and their contents from the working tree and stores
+    # them in 4 hashes.
     #
     # todo    = {  file_name => complete_content  }
     # fn_idx  = {  file_name => ID                }
     # cnt_idx = {  ID        => file_name         }
-    # print   = {  file_name => print_comtent     }
+    # print   = {  file_name => print_content     }
     my ( %todo, %print, %cnt_idx, %fn_idx ) = ();
     my @t = ();
     find( sub { push @t, "$File::Find::name$/" if (/\.yare$/) }, $wt );
@@ -165,14 +196,17 @@ sub fetch_todo_data {
         $o++;
     }
 
-    # todo, nr_of_files, file_name_index_hr, count_index_hr, print
+    # TODO: nr_of_files, file_name_index_hr, count_index_hr, print
     return \%todo, $o - 1, \%fn_idx, \%cnt_idx, \%print;
 }
 
 # -------------------- networking -------------------------------------------
 sub online {
     my $hostname = $cfg->{online}->{hostname};
-    return 1 if pingecho($hostname);
+    my $p        = Net::Ping->new('syn');
+    my $r        = $p->ping($hostname);
+    $p->close();
+    return 1 if $r;
     return 0;
 }
 
@@ -225,7 +259,7 @@ Yare::Client
 
 =head1 VERSION
 
-version 0.0.3
+version 0.0.6
 
 =head1 SYNOPSIS
 
@@ -235,22 +269,21 @@ version 0.0.3
 
 =head1 DESCRIPTION
 
-Yare is a prove of concept. It proves how a shared todo list can be made
-possible. Yare::Client implements the access to a Yare based todo list. For
-this to work, it do not matter if the clients (laptops for example) are always
-online or not, or if they try to input the same information at the same time or
-not. Of course it can not work with a client that never ever will be put
-online, but that is obvious. 
+Yare is a proof of concept. It proves how to make a shared todo list possible.
+Yare::Client implements access to a Yare-based todo list. For this to work, it
+does not matter if the clients (e.g. laptops) are always online or not, or if
+they try to enter the same information at the same time or not. Of course it
+will not work with a client that will never be online, but that is obvious.
 
-Yare::Client is a Term::Shell based class that can be used very simple by
-a program by invoking the shell loop start command.
+Yare::Client is a Term::Shell based class that can be used very easily by a
+program by calling the shell loop start command.
 
 =head1 METHODS
 
 =head2 cmdloop
 
-This is the only officially method supported (for now). See the SYNOPSIS
-on how to use it.
+This is the only officially supported method (for now). See the SYNOPSIS for
+how to use it.
 
 =head1 SEE ALSO
 
