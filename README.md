@@ -1,8 +1,8 @@
 ---
 title: README
 author: Christian Külker
-date: 2023-03-08
-version: 0.1.0
+date: 2023-03-09
+version: 0.2.0
 
 ---
 
@@ -89,6 +89,11 @@ or
 
 | README  | Yare  | Date       | Notes                                        |
 | ------- | ----- | ---------- | -------------------------------------------- |
+| 0.2.0   | 0.0.6 | 2023-03-09 | README.md: Fix version,                      |
+|         |       |            | bin/yare: boiler plate, version, FindBin     |
+|         |       |            | lib/Yare.pm: Improve writing, boilerplate    |
+|         |       |            | lib/Yare/Client.pm: Improve writing, format  |
+|         |       |            | Fix online detection (pingecho -> ping syn)  |
 | 0.1.9   | 0.0.5 | 2023-03-08 | Add history, improve writing, bump year      |
 | 0.1.8   | 0.0.5 | 2023-02-25 | Improve license files: COPYING, LICENSE      |
 | 0.1.7   | 0.0.5 | 2014-08-22 | Bump version of yare to 0.0.5                |
