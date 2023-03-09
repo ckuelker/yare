@@ -1,8 +1,26 @@
 #!/usr/bin/perl -w
+# +---------------------------------------------------------------------------+
+# | yare                                                                      |
+# |                                                                           |
+# | Startup script for a Yare::Client shell                                   |
+# |                                                                           |
+# | Version: 0.0.1                                                            |
+# |                                                                           |
+# | Changes:                                                                  |
+# |                                                                           |
+# | 0.1.0 2023-03-09 Christian Külker <christian.kuelker@cipworx.org>         |
+# |     - Add boiler plate                                                    |
+# |     - Add FindBin                                                         |
+# |     - Initial release with a version (project version in Yare::Client)    |
+# |                                                                           |
+# +---------------------------------------------------------------------------+
 use warnings;
 use strict;
+use FindBin qw($RealBin);
+use lib "$RealBin/../lib";
 use Yare::Client;
 
 my $c = Yare::Client->new;
 $c->cmdloop;
 exit 0;
+
